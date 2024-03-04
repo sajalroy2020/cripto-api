@@ -59,7 +59,6 @@ class ChartController extends Controller
         }
     }
 
-
     // api data get
     public function chartDataGet(){
         $chartData = Chart::get();

@@ -4,6 +4,8 @@ use App\Http\Controllers\ChartController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,8 +24,9 @@ Route::group(['middleware' => ['auth']], function() {
         return redirect('dashboard');
     });
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('profile-view', [DashboardController::class, 'profile'])->name('profile');
-    Route::post('profile-update', [DashboardController::class, 'profileUpdate'])->name('profile-update');
+
+    Route::get('profile-view', [ProfileController::class, 'profile'])->name('profile');
+    Route::post('profile-update', [ProfileController::class, 'profileUpdate'])->name('profile-update');
 
     // chart data insurt route
     Route::group(['prefix' => 'chart', 'as' => 'chart.'], function () {
