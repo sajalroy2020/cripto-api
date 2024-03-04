@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ChartController;
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('chart/get', [DashboardController::class, 'chartDataGet']);
 
-Route::get('chart/get', [ChartController::class, 'chartDataGet']);
+ // auth route
+    Route::post('user-register', [AuthController::class, 'register']);
+    Route::post('user-login', [AuthController::class, 'login']);
