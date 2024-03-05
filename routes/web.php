@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\ChartController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,9 @@ use App\Http\Controllers\ProfileController;
 */
 
 Auth::routes();
+
+Route::get('verify-mail-link/{token}', [AuthController::class, 'verifyMailLink']);
+
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/', function () {
