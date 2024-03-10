@@ -25,5 +25,6 @@ Route::get('chart/get', [DashboardController::class, 'chartDataGet']);
  // auth route
     Route::post('user-register', [AuthController::class, 'register']);
     Route::post('user-login', [AuthController::class, 'login']);
-
     Route::get('mail-verify/{email}', [AuthController::class, 'mailVerify']);
+    Route::get('single-user/{id}', [AuthController::class, 'getuser']);
+
