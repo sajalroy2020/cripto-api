@@ -20,7 +20,7 @@ use App\Http\Controllers\ProfileController;
 
 Auth::routes();
 
-Route::get('verify-mail-link/{token}', [AuthController::class, 'verifyMailLink']);
+Route::get('mail-verify/{token}', [AuthController::class, 'verifyMailLink']);
 
 
 Route::group(['middleware' => ['auth']], function() {

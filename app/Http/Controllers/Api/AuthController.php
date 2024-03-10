@@ -33,6 +33,7 @@ class AuthController extends Controller{
         $validatedData['name'] = Str::random(6);
         $user = User::create($validatedData);
         $token = $user->createToken('token')->plainTextToken;
+        $user =User::find($user->id);
 
         return response()->json([
             'success' => true,
@@ -84,7 +85,7 @@ class AuthController extends Controller{
 
                 $random = Str::random(40);
                 $domain = URL::to('/');
-                $url = $domain.'/verify-mail-link/'.$random;
+                $url = $domain.'/mail-verify/'.$random;
 
                 $data['url'] = $url;
                 $data['email'] = $email;
@@ -102,7 +103,7 @@ class AuthController extends Controller{
                 return response()->json(['success' => true, 'message' => 'Mail sent successfully']);
 
             }else{
-                return response()->json(['success' => false, 'message' => 'User is not found']);
+                return response()->json(['success' => false, 'message' => 'This email is invalid..!']);
             }
         // }else{
         //     return response()->json(['success' => false, 'message' => 'User is not authenticated']);
@@ -124,6 +125,15 @@ class AuthController extends Controller{
         }else{
             return response()->json(['success' => false, 'message' => 'Your token has expired please try again']);
         }
+    }
+
+    public function getuser($id){
+        $user =User::find($id);
+
+        return response()->json([
+            'success' => true,
+            'user' => $user,
+        ], 200);
     }
 
 }
