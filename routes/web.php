@@ -22,8 +22,7 @@ Auth::routes();
 
 Route::get('mail-verify/{token}', [AuthController::class, 'verifyMailLink']);
 
-
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth', 'isAdmin']], function() {
     Route::get('/', function () {
         return redirect('dashboard');
     });

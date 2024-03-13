@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('username')->nullable();
             $table->string('image')->nullable();
+            $table->string('uu_id')->nullable();
             $table->bigInteger('ref_id')->nullable();
             $table->tinyInteger('email_verified')->default(0)->comment('1 for email verified status true');
             $table->timestamp('email_verified_at')->nullable();
@@ -32,6 +33,7 @@ return new class extends Migration
             $table->tinyInteger('trading_mode')->default(0);
             $table->tinyInteger('auto_trading_mode')->default(0);
             $table->date('auto_trading_end_date')->nullable();
+            $table->string('otp')->nullable();
             $table->rememberToken();
             $table->timestamps();
 

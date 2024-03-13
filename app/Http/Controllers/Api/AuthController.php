@@ -31,6 +31,7 @@ class AuthController extends Controller{
 
         $validatedData['password'] = Hash::make($validatedData['password']);
         $validatedData['name'] = Str::random(6);
+        $validatedData['uu_id'] = rand(100000, 999999);
         $user = User::create($validatedData);
         $token = $user->createToken('token')->plainTextToken;
         $user =User::find($user->id);
@@ -84,20 +85,19 @@ class AuthController extends Controller{
             if (count($user) > 0) {
 
                 $random = Str::random(40);
-                $domain = URL::to('/');
-                $url = $domain.'/mail-verify/'.$random;
+                $otp = rand(1000, 9999);
 
-                $data['url'] = $url;
+                $data['otp'] = $otp;
                 $data['email'] = $email;
                 $data['title'] = "Email Verification";
-                $data['body'] = "Please click here to below to verify your mail";
+                $data['body'] = "Please Verify your user's identity by sending your OTP";
 
                 Mail::send('mail.verifyMail', ['data'=>$data], function($message) use ($data){
                     $message->to($data['email'])->subject($data['title']);
                 });
 
                 $userData = User::find($user[0]['id']);
-                $userData->remember_token = $random;
+                $userData->otp = $otp;
                 $userData->save();
 
                 return response()->json(['success' => true, 'message' => 'Mail sent successfully']);
@@ -127,13 +127,81 @@ class AuthController extends Controller{
         }
     }
 
-    public function getuser($id){
-        $user =User::find($id);
+    public function getuser($uu_id){
+        $user =User::where('uu_id', $uu_id)->first();
+
+        if ($user->email_verified == 1) {
+            return response()->json([
+                'email_verified' => true,
+                'success' => true,
+                'user' => $user,
+            ], 200);
+        }
 
         return response()->json([
+            'email_verified' => false,
             'success' => true,
             'user' => $user,
         ], 200);
+    }
+
+
+    public function checkOtp(Request $request){
+
+        try {
+            $request->validate([
+                'otp' => ['required', 'string'],
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->errors(),
+            ], 400);
+        }
+
+        $user =User::where('uu_id', $request->uu_id)->first();
+        $dateTime = Carbon::now()->format('Y-m-d H:i:s');
+
+        if ($user->otp == $request->otp) {
+            $user->email_verified = 1;
+            $user->email_verified_at = $dateTime;
+            $user->status = 1;
+            $user->save();
+
+            return response()->json([
+                'otp_verified' => true,
+                'success' => true,
+                'user' => $user,
+            ], 200);
+        }
+
+        return response()->json([
+            'otp_verified' => false,
+            'success' => true,
+            'user' => $user,
+        ], 200);
+    }
+
+    public function deleteOtp($uu_id){
+        $user =User::where('uu_id', $uu_id)->get();
+        if (count($user) > 0) {
+            $userOne = User::where('uu_id', $uu_id)->first();
+            $userOne->email_verified = 0;
+            $userOne->otp = null;
+            $userOne->status = 0;
+            $userOne->save();
+            return response()->json([
+                'otp_verified' => true,
+                'success' => true,
+                'user' => $userOne,
+            ], 200);
+        }else{
+            return response()->json([
+                'otp_verified' => false,
+                'success' => false,
+                'user' => $user,
+            ], 404);
+        }
     }
 
 }
