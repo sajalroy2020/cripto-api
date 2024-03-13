@@ -15,8 +15,8 @@
 <body>
     <div class="mail-box">
         <p>{{$data['body']}}</p>
-        <a href="{{$data['url']}}"> Click here verify your mail.</a>
-        <h4>Thak You</h4>
+        <h2>{{$data['otp']}}</h2>
+        <h1>Thak You</h1>
     </div>
 </body>
 </html>

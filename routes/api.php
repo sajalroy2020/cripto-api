@@ -26,5 +26,8 @@ Route::get('chart/get', [DashboardController::class, 'chartDataGet']);
     Route::post('user-register', [AuthController::class, 'register']);
     Route::post('user-login', [AuthController::class, 'login']);
     Route::get('mail-verify/{email}', [AuthController::class, 'mailVerify']);
-    Route::get('single-user/{id}', [AuthController::class, 'getuser']);
+    Route::get('single-user/{uu_id}', [AuthController::class, 'getuser']);
+    Route::post('otp-verify', [AuthController::class, 'checkOtp']);
+    Route::get('otp-delete/{uu_id}', [AuthController::class, 'deleteOtp']);
+
 
