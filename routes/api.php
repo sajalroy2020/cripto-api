@@ -29,5 +29,7 @@ Route::get('chart/get', [DashboardController::class, 'chartDataGet']);
     Route::get('single-user/{uu_id}', [AuthController::class, 'getuser']);
     Route::post('otp-verify', [AuthController::class, 'checkOtp']);
     Route::get('otp-delete/{uu_id}', [AuthController::class, 'deleteOtp']);
+    Route::post('profile-update', [AuthController::class, 'profileUpdate']);
+
 
 

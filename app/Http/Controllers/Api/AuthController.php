@@ -204,4 +204,61 @@ class AuthController extends Controller{
         }
     }
 
+    public function profileUpdate(Request $request){
+        try {
+            $validationRules = [
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'username' => 'required',
+            ];
+
+            if ($request->has('uu_id')) {
+                $validationRules['email'][] = $request->uu_id;
+            }
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->errors(),
+            ], 400);
+        }
+
+        $hashedPassword = User::where('uu_id', $request->uu_id)->first();
+        $user = User::find($hashedPassword->id);
+
+        if ($request->current_password != '') {
+            if (Hash::check($request->current_password, $hashedPassword->password)) {
+                $user->password = Hash::make($request->password);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Current password dose not match...!',
+                ], 400);
+            }
+        }
+
+        $user->email = $request->email;
+        $user->username = $request->username;
+
+        if ($request->image != '') {
+            if($request->hasFile("image")){
+                $file=$request->file("image");
+                $imageName=time().'_'.$file->getClientOriginalName();
+                $file->move(\public_path("profile/"),$imageName);
+                $user['image'] = $imageName;
+            }
+        }
+
+        $user->save();
+
+        $token = $user->createToken('token')->plainTextToken;
+        $user =User::find($user->id);
+
+        return response()->json([
+            'success' => true,
+            'user' => $user,
+            'token' => $token,
+            'message' => 'Profile updated successfully',
+        ], 200);
+    }
+
 }
