@@ -93,19 +93,19 @@
                     </div>
                     <div class="form-group text-start">
                         <label>Open</label>
-                        <input class="form-control" step="0.01" name="open" autocomplete="open" placeholder="000.00" type="number">
+                        <input class="form-control" step="0.01" name="open" autocomplete="open" placeholder="000.00" type="text">
                     </div>
                     <div class="form-group text-start">
                         <label>High</label>
-                        <input class="form-control" step="0.01" name="high" autocomplete="high" placeholder="000.00" type="number">
+                        <input class="form-control" step="0.01" name="high" autocomplete="high" placeholder="000.00" type="text">
                     </div>
                     <div class="form-group text-start">
                         <label>Low</label>
-                        <input class="form-control" step="0.01" name="low" autocomplete="low" placeholder="000.00" type="number">
+                        <input class="form-control" step="0.01" name="low" autocomplete="low" placeholder="000.00" type="text">
                     </div>
                     <div class="form-group text-start">
                         <label>Close</label>
-                        <input class="form-control" step="0.01" name="close" autocomplete="close" placeholder="000.00" type="number">
+                        <input class="form-control" step="0.01" name="close" autocomplete="close" placeholder="000.00" type="text">
                     </div>
                 </div>
                 <div class="modal-footer">
