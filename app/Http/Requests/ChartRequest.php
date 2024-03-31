@@ -23,10 +23,10 @@ class ChartRequest extends FormRequest
     {
         $rules = [
             'time' => 'required|date',
-            'open' => 'required|numeric',
-            'high' => 'required|numeric',
-            'low' => 'required|numeric',
-            'close' => 'required|numeric',
+            'open' => 'required',
+            'high' => 'required',
+            'low' => 'required',
+            'close' => 'required',
         ];
         return $rules;
     }

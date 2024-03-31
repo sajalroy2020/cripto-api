@@ -44,7 +44,6 @@ class AuthController extends Controller{
         ], 200);
     }
 
-
     public function login(Request $request){
         try {
             $credentials = $request->validate([
@@ -75,7 +74,6 @@ class AuthController extends Controller{
             'message' => 'Invalid credentials',
         ], 401);
     }
-
 
     public function mailVerify($email){
 
@@ -144,7 +142,6 @@ class AuthController extends Controller{
             'user' => $user,
         ], 200);
     }
-
 
     public function checkOtp(Request $request){
 

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('charts', function (Blueprint $table) {
             $table->id();
             $table->date('time')->nullable();
-            $table->integer('open')->default(0);
-            $table->integer('high')->default(0);
-            $table->integer('low')->default(0);
-            $table->integer('close')->default(0);
+            $table->double('open', 19, 8)->default(0);
+            $table->double('high', 19, 8)->default(0);
+            $table->double('low', 19, 8)->default(0);
+            $table->double('close', 19, 8)->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
